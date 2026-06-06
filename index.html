@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rumbo al Mundial 2026</title>
+
 <style>
 :root {
-  --color-main: #00bcd4;
-  --bg-color: #FFEB3B;
+  --color-main: #003366; /* celeste oscuro */
+  --bg-color: #003366;
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
+
 .hero {
   position: relative;
   width: 100%;
@@ -22,23 +25,17 @@
   padding: 20px 10px;
   text-align: center;
 }
-.logo {
-  width: clamp(80px, 15vw, 150px);
-  margin-bottom: 10px;
-}
+
+/* TITULO */
 h1 {
-  font-size: clamp(18px, 3vw, 28px);
-  margin-bottom: 8px;
+  font-size: clamp(12px, 2.5vw, 20px); /* tamaño reducido a la mitad */
+  margin-bottom: 30px;
   letter-spacing: 1px;
   font-weight: 700;
-  color: #000;
+  color: #fff;
 }
-.sub {
-  font-size: 12px;
-  opacity: 0.8;
-  margin-bottom: 15px;
-  color: #000;
-}
+
+/* CONTADOR */
 .countdown {
   display: flex;
   justify-content: center;
@@ -46,39 +43,46 @@ h1 {
   flex-wrap: wrap;
   margin-bottom: 10px;
 }
+
 .box {
-  background: rgba(255,255,255,0.9);
-  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
   padding: 8px 6px;
-  min-width: 45px;
+  min-width: 40px;
   flex: 1;
-  max-width: 70px;
+  max-width: 60px;
 }
+
 .number {
-  font-size: clamp(16px, 5vw, 26px);
+  font-size: clamp(14px, 4vw, 22px);
   font-weight: bold;
-  color: #000;
+  color: #fff;
 }
-.flip { animation: flip 0.5s ease; }
+
+.flip {
+  animation: flip 0.5s ease;
+}
+
 @keyframes flip {
   0% { transform: rotateX(0); }
   50% { transform: rotateX(90deg); }
   100% { transform: rotateX(0); }
 }
+
 .label {
   font-size: 10px;
   text-transform: uppercase;
   opacity: 0.7;
   margin-top: 2px;
-  color: #000;
+  color: #fff;
 }
 </style>
 </head>
+
 <body>
 <section class="hero">
-  <img src="images/logo.png" class="logo" alt="Isologo Mundial">
   <h1>RUMBO AL MUNDIAL 2026</h1>
-  <p class="sub">Seguí la cuenta regresiva</p>
+
   <div class="countdown">
     <div class="box"><div id="days" class="number">0</div><div class="label">Días</div></div>
     <div class="box"><div id="hours" class="number">0</div><div class="label">Hs</div></div>
@@ -86,15 +90,19 @@ h1 {
     <div class="box"><div id="seconds" class="number">0</div><div class="label">Seg</div></div>
   </div>
 </section>
+
 <script>
 const targetDate = new Date("2026-06-11T00:00:00-03:00").getTime();
+
 const elements = {
   days: document.getElementById("days"),
   hours: document.getElementById("hours"),
   minutes: document.getElementById("minutes"),
   seconds: document.getElementById("seconds")
 };
-let lastValues = {}
+
+let lastValues = {};
+
 function animate(el, newValue, key) {
   if (lastValues[key] !== newValue) {
     el.classList.remove("flip");
@@ -104,22 +112,27 @@ function animate(el, newValue, key) {
     lastValues[key] = newValue;
   }
 }
+
 function updateCountdown() {
   const now = new Date().getTime();
   const diff = targetDate - now;
+
   if (diff <= 0) {
     document.querySelector(".countdown").innerHTML = "¡Llegó el día!";
     return;
   }
+
   const d = Math.ceil(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const m = Math.floor((diff / (1000 * 60)) % 60);
   const s = Math.floor((diff / 1000) % 60);
+
   animate(elements.days, d, "d");
   animate(elements.hours, h, "h");
   animate(elements.minutes, m, "m");
   animate(elements.seconds, s, "s");
 }
+
 setInterval(updateCountdown, 1000);
 updateCountdown();
 </script>
